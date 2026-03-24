@@ -64,7 +64,15 @@ namespace G_Net_34_ADV02
             {
                 Console.WriteLine($"{catalog[i].Name}: {labels[i]}");
             }
-            #endregion 
+            #endregion
+            #region task4
+            Console.WriteLine("lowstock=");
+            var low = FilterProducts(catalog, p => p.Stock < 20);
+            foreach(var p in low)
+            {
+                Console.WriteLine($"[lowstock]{p.Name}: only {p.Stock} left!");
+            }
+            #endregion
         }
         public static void print(List<Product> list)
         {
@@ -92,7 +100,18 @@ namespace G_Net_34_ADV02
             return results;
         }
 
+        public static List<Product> FilterProducts(List<Product> products, Predicate<Product> filter)
+        {
+            List<Product> results = new List<Product>();
 
+            foreach (var product in products)
+            {
+                if (filter(product))
+                    results.Add(product);
+                
+            }
+            return results;
+        }
 
     }
 }
