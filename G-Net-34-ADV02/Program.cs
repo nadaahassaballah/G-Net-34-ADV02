@@ -19,24 +19,34 @@ namespace G_Net_34_ADV02
                 new Product { Id = 9, Name = "Headphones", Category = "Electronics", Price = 150, Stock = 40 },
                 new Product { Id = 10, Name = "Jacket", Category = "Clothing", Price = 120, Stock = 15 }
             };
+            #region task1
 
             List<Product> electronics = SearchProducts(catalog, p => p.Category == "Electronics");
             List<Product> under50p = SearchProducts(catalog, p => p.Price < 50);
             List<Product> instock = SearchProducts(catalog, p => p.Stock > 0);
-            List<Product> cheaperclotes = SearchProducts(catalog, p =>  p.Category== "Clothing" &&p.Price<100);
+            List<Product> cheaperclotes = SearchProducts(catalog, p => p.Category == "Clothing" && p.Price < 100);
 
             Console.WriteLine("electronics");
             print(electronics);
             Console.WriteLine("under50p");
             print(under50p);
 
-            
+
             Console.WriteLine("instock");
             print(instock);
             Console.WriteLine("cheaperclotes");
             print(cheaperclotes);
 
 
+
+            #endregion
+            #region task2
+            Console.WriteLine("short report");
+            printreport(catalog, p => Console.WriteLine($"{p.Name}_ ${p.Price}"));
+            Console.WriteLine("detailed report");
+            printreport(catalog, p => Console.WriteLine($"[{p.Category}]{p.Name}| ${p.Price}|{p.Stock}"));
+
+            #endregion
         }
         public static void print(List<Product> list)
         {
@@ -49,5 +59,14 @@ namespace G_Net_34_ADV02
         {
             return products.Where(filter).ToList();
         }
+        public static void printreport(List<Product> products, Action<Product> action)
+        {
+            foreach (var item in products)
+            {
+                action(item);
+            }
+        }
+        
+
     }
 }
