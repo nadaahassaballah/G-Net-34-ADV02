@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Net.Http.Headers;
+using System.Runtime.InteropServices;
 
 namespace G_Net_34_ADV02
 {
@@ -47,6 +48,23 @@ namespace G_Net_34_ADV02
             printreport(catalog, p => Console.WriteLine($"[{p.Category}]{p.Name}| ${p.Price}|{p.Stock}"));
 
             #endregion
+            #region task 3
+            Console.WriteLine("summery list ");
+
+            var summaryList = TransformProducts(catalog, p => $"{p.Name} (${p.Price})");
+
+            foreach (var item in summaryList)
+            {
+                Console.WriteLine(item);
+
+            }
+            Console.WriteLine("pricelebels");
+            var labels = TransformProducts(catalog,p=> p.Price > 100 ? "Expensive!" : "Affordable");
+            for (int i = 0; i < catalog.Count; i++)
+            {
+                Console.WriteLine($"{catalog[i].Name}: {labels[i]}");
+            }
+            #endregion 
         }
         public static void print(List<Product> list)
         {
@@ -66,7 +84,15 @@ namespace G_Net_34_ADV02
                 action(item);
             }
         }
-        
+        public static List<result> TransformProducts<result>(List<Product> products,Func<Product,result>trnsform)
+        {
+            List<result> results = new List<result>();
+            foreach (var p in products)
+                results.Add(trnsform(p));
+            return results;
+        }
+
+
 
     }
 }
